@@ -96,38 +96,44 @@ def ConverterDicionarioParaPandas(lista):
     df = pd.DataFrame.from_dict(lista)
     return df
 
-def SalvarExcel(df):
-    df.to_excel('arquivo.xlsx')
+def SalvarExcel(df,nome='arquivo'):
+    df.to_excel(f'{nome}.xlsx',)
 
-def SalvarCsv(df):
-    df.to_csv('arquivo.csv')
+def SalvarCsv(df,nome='arquivo'):
+    df.to_csv(f'{nome}.csv')
 
-def SalvarJson(df):
-    df.to_json('arquivo.json')
+def SalvarJson(df,nome='arquivo'):
+    df.to_json(f'{nome}.json')
 
-def LerExcel():
+def LerExcel(nome='arquivo'):
     try:
-        df = pd.read_excel('arquivo.xlsx')
+        df = pd.read_excel(f'{nome}.xlsx')
     except:
         print('Erro ler excel')
     
     return df
 
-def LerCsv():
+def LerCsv(nome='arquivo'):
     try:
-        df = pd.read_csv('arquivo.csv')
+        df = pd.read_csv(f'{nome}.csv')
     except:
         print('Erro ler CSV')
 
     return df
 
-def LerJson():
+def LerJson(nome='arquivo'):
     try:
-        df = pd.read_json('arquivo.json')
+        df = pd.read_json(f'{nome}.json')
     except:
         print('Erro ler Json')
     
     return df
+
+def ContaLinhas(df):
+    valor = len(df.values) + 1
+
+    return valor
+    
 
 
 ' MAIN '
@@ -135,4 +141,6 @@ def LerJson():
 url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
 dicionario_limpo = LimparDados(BuscarSite(url))
 dados = ConverterDicionarioParaPandas(dicionario_limpo)
-SalvarCsv(dados)
+print(LerCsv())
+print(LerExcel())
+print(LerJson())
