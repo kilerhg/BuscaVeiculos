@@ -1,26 +1,30 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import openpyxl
 
 '''
 Funções para definir:
 
-buscar site e converter para objetivo Bs4
-achar os dados de interesse e retornar
-limpar dados e separar em lista
-transformar em database pandas e retornar
-salvar em Excel
-Salvar csv
-ler em excel e retornar
-ler em csv e retornar
+buscar site e converter para objetivo Bs4 X
+achar os dados de interesse e retornar X
+limpar dados e separar em lista X
+transformar em database pandas e retornar X
+salvar em Excel & CSV & json X
+ler em excel e retornar X
+ler em csv e retornar X
+ler em json e retornar X
+ler arquivos e verificar total de linhas e retornar
+salvar arquivos os arquivos concatenando
+
 '''
 
 '''
 Testes:
 
-Entrar no site de veiculos e fazer webscraping basico
-limpar dados
-ler e salvar arquivo em CSV & Excel com pandas
+Entrar no site de veiculos e fazer webscraping basico X
+limpar dados X
+ler e salvar arquivo em CSV & Excel com pandas X
 
 '''
 '''
@@ -42,8 +46,7 @@ div class="dados_anunciante"
     ''')
 """
 
-def BuscarSite():
-    url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
+def BuscarSite(url):
     resposta = requests.get(url).content
     site = BeautifulSoup(resposta,'html.parser')
     return site
@@ -51,7 +54,11 @@ def BuscarSite():
 def LimparDados(site):
     lista_veiculos = site.find('ul',attrs={'class':'listavertical'})
     veiculos = lista_veiculos.find_all('li',attrs={'anuncio anuncio_1ª_prioridade'})
+    lista_dos_veiculos = []
+
+
     for veiculo in veiculos:
+        dict_veiculos = {}
         nome_veiculo = veiculo.find('h2',attrs={'class':'esquerda titulo_anuncio'}).text.strip()
         valor_veiculo = veiculo.find('h3',attrs={'class':'direita preco_anuncio'}).text[3:-13].strip()
 
@@ -67,15 +74,65 @@ def LimparDados(site):
         bairro = informacoes_anunciante[0].text
         cidade, uf = informacoes_anunciante[1].find_all('span')
         cidade, uf = cidade.text, uf.text
-        print()
-        print(f'''
-        Titulo Anuncio - {nome_veiculo}
-        Valor Veiculo  - {valor_veiculo}
-        Ano modelo     - {ano_modelo}
-        Km Rodados     - {km_rodado}
-        Cor            - {cor}
-        cambio         - {cambio}
-        descricao      - {descricao_anuncio}
-        ''')
 
-LimparDados(BuscarSite())
+        dict_veiculos['nome_veiculo'] = nome_veiculo
+        dict_veiculos['valor_veiculo'] = valor_veiculo
+        dict_veiculos['ano_modelo'] = ano_modelo 
+        dict_veiculos['km_rodado'] = km_rodado 
+        dict_veiculos['cor_veiculo'] = cor 
+        dict_veiculos['cambio_veiculo'] = cambio
+        dict_veiculos['descricao_anuncio'] = descricao_anuncio
+        lista_dos_veiculos.append(dict_veiculos.copy())
+        dict_veiculos.clear()
+    
+    return lista_dos_veiculos
+
+def ConverterDicionarioParaPandas(lista):
+    try:
+        lista = list(lista)
+    except Error as erro:
+        print(f'Erro Convertendo dict para pandas {erro}')
+    
+    df = pd.DataFrame.from_dict(lista)
+    return df
+
+def SalvarExcel(df):
+    df.to_excel('arquivo.xlsx')
+
+def SalvarCsv(df):
+    df.to_csv('arquivo.csv')
+
+def SalvarJson(df):
+    df.to_json('arquivo.json')
+
+def LerExcel():
+    try:
+        df = pd.read_excel('arquivo.xlsx')
+    except:
+        print('Erro ler excel')
+    
+    return df
+
+def LerCsv():
+    try:
+        df = pd.read_csv('arquivo.csv')
+    except:
+        print('Erro ler CSV')
+
+    return df
+
+def LerJson():
+    try:
+        df = pd.read_json('arquivo.json')
+    except:
+        print('Erro ler Json')
+    
+    return df
+
+
+' MAIN '
+
+url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
+dicionario_limpo = LimparDados(BuscarSite(url))
+dados = ConverterDicionarioParaPandas(dicionario_limpo)
+SalvarCsv(dados)

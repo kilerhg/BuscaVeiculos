@@ -24,13 +24,13 @@ Abrir o Cmd ou PowerShell Na pasta e rodar o comando: ```python main.py```
 ## Task-List
 
 - [X] Desenvolver a ideia
-- [ ] Prototipagem
-- [ ] criar funções básicas
-- [ ] criar funções que mandar e recebam requests com veiculos
-- [ ] limpar dados e separar
-- [ ] Estudar Pandas com Excel
-- [ ] Estudar bibliotecas csv (leitura e gravação)
-- [ ] Criar funções pandas que gravam em Excel ou CSV
+- [X] Prototipagem
+- [X] criar funções básicas
+- [X] criar funções que mandar e recebam requests com veiculos
+- [X] limpar dados e separar
+- [X] Estudar Pandas com Excel
+- [X] Estudar bibliotecas csv (leitura e gravação)
+- [X] Criar funções pandas que gravam em Excel ou CSV
 - [ ] criar interface basica
 - [ ] criar ligação entre back e front
 - [ ] Lapidar projeto
