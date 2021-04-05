@@ -51,22 +51,31 @@ def BuscarSite():
 def LimparDados(site):
     lista_veiculos = site.find('ul',attrs={'class':'listavertical'})
     veiculos = lista_veiculos.find_all('li',attrs={'anuncio anuncio_1ª_prioridade'})
-    veiculo = veiculos[0]
+    for veiculo in veiculos:
+        nome_veiculo = veiculo.find('h2',attrs={'class':'esquerda titulo_anuncio'}).text.strip()
+        valor_veiculo = veiculo.find('h3',attrs={'class':'direita preco_anuncio'}).text[3:-13].strip()
 
-    nome_veiculo = veiculo.find('h2',attrs={'class':'esquerda titulo_anuncio'}).text.strip()
-    valor_veiculo = veiculo.find('h3',attrs={'class':'direita preco_anuncio'}).text[3:-13].strip()
+        informacoes_veiculo = veiculo.find('div',attrs={'class':'dados_veiculo'}).find_all('p')
+        ano_modelo = str(informacoes_veiculo[0].text).replace(' ','')
+        ano_modelo = ano_modelo[:5] + ano_modelo[-4:]
+        km_rodado = informacoes_veiculo[1].text.strip()
+        cor = informacoes_veiculo[2].text.strip()
+        cambio = informacoes_veiculo[3].text.strip()
+        descricao_anuncio = informacoes_veiculo[4].text.strip()
 
-    informacoes_veiculo = veiculo.find('div',attrs={'class':'dados_veiculo'}).find_all('p')
-    ano_modelo = str(informacoes_veiculo[0].text).replace(' ','')
-    ano_modelo = ano_modelo[:5] + ano_modelo[-4:]
-    km_rodado = informacoes_veiculo[1].text.strip()
-    cor = informacoes_veiculo[2].text.strip()
-    cambio = informacoes_veiculo[3].text.strip()
-    descricao_anuncio = informacoes_veiculo[4].text.strip()
-
-    informacoes_anunciante = veiculo.find('div',attrs={'class':'dados_anunciante'}).find_all('p')
-    bairro = informacoes_anunciante[0].text
-    cidade, uf = informacoes_anunciante[1].find_all('span')
-    cidade, uf = cidade.text, uf.text
+        informacoes_anunciante = veiculo.find('div',attrs={'class':'dados_anunciante'}).find_all('p')
+        bairro = informacoes_anunciante[0].text
+        cidade, uf = informacoes_anunciante[1].find_all('span')
+        cidade, uf = cidade.text, uf.text
+        print()
+        print(f'''
+        Titulo Anuncio - {nome_veiculo}
+        Valor Veiculo  - {valor_veiculo}
+        Ano modelo     - {ano_modelo}
+        Km Rodados     - {km_rodado}
+        Cor            - {cor}
+        cambio         - {cambio}
+        descricao      - {descricao_anuncio}
+        ''')
 
 LimparDados(BuscarSite())
