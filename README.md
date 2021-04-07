@@ -40,3 +40,5 @@ Abrir o Cmd ou PowerShell Na pasta e rodar o comando: ```python main.py```
 ## Screenshot
 
 ![Prototipo](./base_programa.png)
+
+## [Anotações](./NOTEPAD.md)

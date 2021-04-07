@@ -14,7 +14,7 @@ salvar em Excel & CSV & json X
 ler em excel e retornar X
 ler em csv e retornar X
 ler em json e retornar X
-ler arquivos e verificar total de linhas e retornar
+ler arquivos e verificar total de linhas e retornar X
 salvar arquivos os arquivos concatenando
 
 '''
@@ -77,14 +77,14 @@ def LimparDados(site):
 
         dict_veiculos['nome_veiculo'] = nome_veiculo
         dict_veiculos['valor_veiculo'] = valor_veiculo
-        dict_veiculos['ano_modelo'] = ano_modelo 
-        dict_veiculos['km_rodado'] = km_rodado 
-        dict_veiculos['cor_veiculo'] = cor 
+        dict_veiculos['ano_modelo'] = ano_modelo
+        dict_veiculos['km_rodado'] = km_rodado
+        dict_veiculos['cor_veiculo'] = cor
         dict_veiculos['cambio_veiculo'] = cambio
         dict_veiculos['descricao_anuncio'] = descricao_anuncio
         lista_dos_veiculos.append(dict_veiculos.copy())
         dict_veiculos.clear()
-    
+
     return lista_dos_veiculos
 
 def ConverterDicionarioParaPandas(lista):
@@ -92,7 +92,7 @@ def ConverterDicionarioParaPandas(lista):
         lista = list(lista)
     except Error as erro:
         print(f'Erro Convertendo dict para pandas {erro}')
-    
+
     df = pd.DataFrame.from_dict(lista)
     return df
 
@@ -110,7 +110,7 @@ def LerExcel(nome='arquivo'):
         df = pd.read_excel(f'{nome}.xlsx')
     except:
         print('Erro ler excel')
-    
+
     return df
 
 def LerCsv(nome='arquivo'):
@@ -126,14 +126,17 @@ def LerJson(nome='arquivo'):
         df = pd.read_json(f'{nome}.json')
     except:
         print('Erro ler Json')
-    
+
     return df
 
 def ContaLinhas(df):
     valor = len(df.values) + 1
 
     return valor
-    
+
+def ConcatenarDataFrames(df1,df2):
+    pass
+
 
 
 ' MAIN '
@@ -141,6 +144,6 @@ def ContaLinhas(df):
 url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
 dicionario_limpo = LimparDados(BuscarSite(url))
 dados = ConverterDicionarioParaPandas(dicionario_limpo)
-print(LerCsv())
-print(LerExcel())
-print(LerJson())
+print(ContaLinhas(LerCsv()))
+print(ContaLinhas(LerExcel()))
+print(ContaLinhas(LerJson()))
