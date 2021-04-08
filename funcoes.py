@@ -15,7 +15,10 @@ ler em excel e retornar X
 ler em csv e retornar X
 ler em json e retornar X
 ler arquivos e verificar total de linhas e retornar X
-salvar arquivos os arquivos concatenando
+salvar arquivos os arquivos concatenando X
+Salvar Link junto com os dados
+limpar Duplicatas
+
 
 '''
 
@@ -96,14 +99,14 @@ def ConverterDicionarioParaPandas(lista):
     df = pd.DataFrame.from_dict(lista)
     return df
 
-def SalvarExcel(df,nome='arquivo'):
-    df.to_excel(f'{nome}.xlsx',)
+def SalvarExcel(df,nome='arquivo',valor_index=True):
+    df.to_excel(f'{nome}.xlsx',index=valor_index)
 
-def SalvarCsv(df,nome='arquivo'):
-    df.to_csv(f'{nome}.csv')
+def SalvarCsv(df,nome='arquivo',valor_index=True):
+    df.to_csv(f'{nome}.csv',index=valor_index)
 
-def SalvarJson(df,nome='arquivo'):
-    df.to_json(f'{nome}.json')
+def SalvarJson(df,nome='arquivo',valor_index=True):
+    df.to_json(f'{nome}.json',index=valor_index)
 
 def LerExcel(nome='arquivo'):
     try:
@@ -135,7 +138,17 @@ def ContaLinhas(df):
     return valor
 
 def ConcatenarDataFrames(df1,df2):
-    pass
+    colunas = ['nome_veiculo', 'valor_veiculo', 'ano_modelo', 'km_rodado',
+       'cor_veiculo', 'cambio_veiculo', 'descricao_anuncio']
+    conjunto = pd.concat([df1,df2])
+    conjunto = conjunto[colunas]
+    conta_linhas = len(df1.values) + len(df2.values)
+    try:
+        conjunto.insert(0,'numeros',range(0,conta_linhas))
+    except:
+        pass
+    
+    return conjunto
 
 
 
@@ -144,6 +157,7 @@ def ConcatenarDataFrames(df1,df2):
 url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
 dicionario_limpo = LimparDados(BuscarSite(url))
 dados = ConverterDicionarioParaPandas(dicionario_limpo)
-print(ContaLinhas(LerCsv()))
-print(ContaLinhas(LerExcel()))
-print(ContaLinhas(LerJson()))
+dados_csv = LerCsv()
+retorno = ConcatenarDataFrames(dados,dados_csv)
+SalvarExcel(ConcatenarDataFrames(dados,retorno),valor_index=False)
+
