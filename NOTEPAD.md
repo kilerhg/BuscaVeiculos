@@ -29,10 +29,7 @@
 > * [Guia Markdown](https://www.markdownguide.org/)
 > * [Documentação Pandas](https://pandas.pydata.org/pandas-docs/stable/search.html?q=.unique)
 > * [Como Concatenar DataFrames Pandas](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html)
-
-'''
-https://stackoverflow.com/questions/26786960/remove-index-column-while-saving-csv-in-pandas
-https://datatofish.com/column-as-index-pandas-dataframe/
-https://www.geeksforgeeks.org/how-to-move-a-column-to-first-position-in-pandas-dataframe/
-https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html
-'''
+> * [Remover Coluna index pandas salvando](https://stackoverflow.com/questions/26786960/remove-index-column-while-saving-csv-in-pandas)
+> * [Setar uma coluna como o index Pandas DataFrame](https://datatofish.com/column-as-index-pandas-dataframe/)
+> * [Como Adicionar e mover uma coluna para primeira Posição Pandas](https://www.geeksforgeeks.org/how-to-move-a-column-to-first-position-in-pandas-dataframe/)
+> * [Concatenar DataFrame Pandas](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html)
