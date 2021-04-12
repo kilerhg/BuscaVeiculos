@@ -157,7 +157,5 @@ def ConcatenarDataFrames(df1,df2):
 url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
 dicionario_limpo = LimparDados(BuscarSite(url))
 dados = ConverterDicionarioParaPandas(dicionario_limpo)
-dados_csv = LerCsv()
-retorno = ConcatenarDataFrames(dados,dados_csv)
-SalvarExcel(ConcatenarDataFrames(dados,retorno),valor_index=False)
+SalvarExcel(dados)
 
