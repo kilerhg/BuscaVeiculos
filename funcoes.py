@@ -35,6 +35,7 @@ ler e salvar arquivo em CSV & Excel com pandas X
 <h3 class="direita preco_anuncio">
 div class="dados_veiculo"
 div class="dados_anunciante"
+a class="clearfix"
 '''
 
 """
@@ -59,7 +60,6 @@ def LimparDados(site):
     veiculos = lista_veiculos.find_all('li',attrs={'anuncio anuncio_1ª_prioridade'})
     lista_dos_veiculos = []
 
-
     for veiculo in veiculos:
         dict_veiculos = {}
         nome_veiculo = veiculo.find('h2',attrs={'class':'esquerda titulo_anuncio'}).text.strip()
@@ -78,6 +78,9 @@ def LimparDados(site):
         cidade, uf = informacoes_anunciante[1].find_all('span')
         cidade, uf = cidade.text, uf.text
 
+        link_bruto = veiculo.find('a',attrs={'class':'clearfix'})
+        link = 'https://www.icarros.com.br' + link_bruto['href']
+
         dict_veiculos['nome_veiculo'] = nome_veiculo
         dict_veiculos['valor_veiculo'] = valor_veiculo
         dict_veiculos['ano_modelo'] = ano_modelo
@@ -85,11 +88,11 @@ def LimparDados(site):
         dict_veiculos['cor_veiculo'] = cor
         dict_veiculos['cambio_veiculo'] = cambio
         dict_veiculos['descricao_anuncio'] = descricao_anuncio
+        dict_veiculos['link'] = link
         lista_dos_veiculos.append(dict_veiculos.copy())
         dict_veiculos.clear()
 
     return lista_dos_veiculos
-
 def ConverterDicionarioParaPandas(lista):
     try:
         lista = list(lista)
@@ -158,4 +161,7 @@ url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa
 dicionario_limpo = LimparDados(BuscarSite(url))
 dados = ConverterDicionarioParaPandas(dicionario_limpo)
 SalvarExcel(dados)
+
+
+LimparDados(BuscarSite(url))
 
