@@ -33,3 +33,5 @@
 > * [Setar uma coluna como o index Pandas DataFrame](https://datatofish.com/column-as-index-pandas-dataframe/)
 > * [Como Adicionar e mover uma coluna para primeira Posição Pandas](https://www.geeksforgeeks.org/how-to-move-a-column-to-first-position-in-pandas-dataframe/)
 > * [Concatenar DataFrame Pandas](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html)
+> * [Detectar Duplicatas DataFrame Pandas](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.duplicated.html)
+> * [Remover Duplicatas DataFrame Pandas](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop_duplicates.html#pandas.DataFrame.drop_duplicates)

@@ -142,7 +142,7 @@ def ContaLinhas(df):
 
 def ConcatenarDataFrames(df1,df2):
     colunas = ['nome_veiculo', 'valor_veiculo', 'ano_modelo', 'km_rodado',
-       'cor_veiculo', 'cambio_veiculo', 'descricao_anuncio']
+       'cor_veiculo', 'cambio_veiculo', 'descricao_anuncio','link']
     conjunto = pd.concat([df1,df2])
     conjunto = conjunto[colunas]
     conta_linhas = len(df1.values) + len(df2.values)
@@ -153,15 +153,30 @@ def ConcatenarDataFrames(df1,df2):
     
     return conjunto
 
+def RemoverDuplicatas(df):
+    try:
+        df = df.drop_duplicates(subset=['link'])
+    except:
+        pass
+
+    return df
+
+
 
 
 ' MAIN '
 
-url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
+""" url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
 dicionario_limpo = LimparDados(BuscarSite(url))
-dados = ConverterDicionarioParaPandas(dicionario_limpo)
-SalvarExcel(dados)
+dados = ConverterDicionarioParaPandas(dicionario_limpo) """
+dados_salvos = LerExcel()
+dados_salvos = RemoverDuplicatas(dados_salvos)
+SalvarExcel(dados_salvos)
+""" novo_dado = ConcatenarDataFrames(dados,dados_salvos)
+SalvarExcel(novo_dado,valor_index=False) """
+
+""" SalvarExcel(dados) """
 
 
-LimparDados(BuscarSite(url))
+""" LimparDados(BuscarSite(url)) """
 
