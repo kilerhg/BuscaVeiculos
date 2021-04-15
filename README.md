@@ -12,7 +12,7 @@ Clone este repositorio:
 ```git clone https://github.com/kilerhg/BuscaVeiculos.git```
 
 Entre no repositorio:
-```cd gerador_cfg```
+```cd BuscaVeiculos```
 
 Instalar Requisitos:
 ```pip install -r requirements.txt```
