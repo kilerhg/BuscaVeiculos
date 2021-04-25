@@ -16,8 +16,8 @@ ler em csv e retornar X
 ler em json e retornar X
 ler arquivos e verificar total de linhas e retornar X
 salvar arquivos os arquivos concatenando X
-Salvar Link junto com os dados
-limpar Duplicatas
+Salvar Link junto com os dados X
+limpar Duplicatas X
 
 
 '''
@@ -150,7 +150,7 @@ def ConcatenarDataFrames(df1,df2):
         conjunto.insert(0,'numeros',range(0,conta_linhas))
     except:
         pass
-    
+
     return conjunto
 
 def RemoverDuplicatas(df):
@@ -162,21 +162,10 @@ def RemoverDuplicatas(df):
     return df
 
 
-
-
 ' MAIN '
 
-""" url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
+url = 'https://www.icarros.com.br/ache/listaanuncios.jsp?bid=0&opcaocidade=1&foa=1&cidadeaberto=&escopo=2&anunciosUsados=1&marca1=0&modelo1=&anomodeloinicial=0&anomodelofinal=0&locationSop=est_SP.1_-cid_9432.1_-esc_2.1_-rai_50.1_'
 dicionario_limpo = LimparDados(BuscarSite(url))
-dados = ConverterDicionarioParaPandas(dicionario_limpo) """
-dados_salvos = LerExcel()
-dados_salvos = RemoverDuplicatas(dados_salvos)
-SalvarExcel(dados_salvos)
-""" novo_dado = ConcatenarDataFrames(dados,dados_salvos)
-SalvarExcel(novo_dado,valor_index=False) """
-
-""" SalvarExcel(dados) """
-
-
-""" LimparDados(BuscarSite(url)) """
-
+dados = ConverterDicionarioParaPandas(dicionario_limpo)
+dados_limpos = RemoverDuplicatas(dados)
+SalvarCsv(dados_limpos)
